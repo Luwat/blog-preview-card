@@ -7,8 +7,8 @@
     --font-mid: 500;
     --font-bold: 800;
     --text-base: clamp(0.75rem, 1.3vw, 0.875rem);
-    --text-lg: clamp(1rem, 1.6vw, 1.125rem);
-    --text-xl: clamp(1.5rem, 2.5vw, 1.75rem);
+    --text-lg: clamp(0.875rem, 1.6vw, 1rem);
+    --text-xl: clamp(1.25rem, 2.5vw, 1.5rem);
 }
 
 body {
@@ -91,14 +91,13 @@ body {
 .bottom {
     display: flex;
     align-items: center;
+    gap: 12px;
 }
 
 .avatar {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    overflow: hidden;
-    margin-right: 10px;
 }
 
 .avatar img {
@@ -109,6 +108,7 @@ body {
 
 .name {
     margin: 0;
+    font-size: 0.875rem;
     font-weight: var(--font-bold);
 }
 
