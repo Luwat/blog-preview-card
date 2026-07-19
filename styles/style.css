@@ -6,6 +6,8 @@
     --font-regular: 400;
     --font-mid: 500;
     --font-bold: 800;
+    
+    /* Using rem values inside clamp for proper accessibility scaling */
     --text-base: clamp(0.75rem, 1.3vw, 0.875rem);
     --text-lg: clamp(0.875rem, 1.6vw, 1rem);
     --text-xl: clamp(1.25rem, 2.5vw, 1.5rem);
@@ -15,25 +17,35 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
+    min-height: 100vh; /* Using min-height prevents layout clipping on tiny devices */
     font-family: "Figtree", "Outfit", sans-serif;
     font-weight: var(--font-regular);
     background-color: var(--primary-color);
     color: var(--quaternary-color);
     margin: 0;
-    padding: 0;
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    
+    /* Dynamic, flexible padding using clamp and rem */
+    padding: clamp(1rem, 0.75rem + 1.25vw, 1.5rem); 
     background-color: var(--secondary-color);
-    width: 327px; 
-    height: 501px;
-    border-radius: 24px;
-    box-shadow: 8px 8px var(--quaternary-color);
+    
+    /* Switched from fixed width/height to max-width & auto-height. 
+       This stops text from overflowing or breaking out of the container bounds. */
+    width: 100%;
+    max-width: 20.4375rem; /* 327px */
+    border-radius: 1.5rem; /* 24px */
+    box-shadow: 0.5rem 0.5rem var(--quaternary-color); /* 8px */
+}
+
+/* Responsive adjustment using your em-based media query */
+@media (min-width: 48em) { /* 768px */
+    .container {
+        max-width: 24rem; /* 384px */
+    }
 }
 
 .image-wrapper {
@@ -42,28 +54,34 @@ body {
 
 .image {
     width: 100%;
-    height: 100%;
-    border-radius: 10px;
+    height: auto;
+    display: block; /* Removes unwanted baseline image spacing */
+    border-radius: 0.625rem; /* 10px */
     object-fit: cover;
 }
 
 .top {
-    margin-top: 20px;
+    /* Utilizing logical property to handle layout flow gracefully */
+    margin-block-start: 1.25rem; /* 20px */
 }
 
 .category {
     background-color: var(--primary-color);
     color: var(--quaternary-color);
     border: none;
-    padding: 12px 20px;
-    border-radius: 4px;
+    
+    /* Buttons scale beautifully using rem padding relative to font size */
+    padding: 0.75rem 1.25rem; /* 12px 20px */
+    border-radius: 0.25rem; /* 4px */
     cursor: pointer;
     font-size: var(--text-base);
     font-weight: var(--font-bold);
 }
 
-.category:focus {
-    outline: none;
+/* Ensure accessible focus styles remain visible for keyboard users */
+.category:focus-visible {
+    outline: 2px solid var(--quaternary-color);
+    outline-offset: 2px;
 }
 
 .date {
@@ -74,30 +92,33 @@ body {
     font-size: var(--text-xl);
     font-weight: var(--font-bold);
     color: var(--quaternary-color);
+    margin-block: 0.75rem; /* Consistent spacing structure */
 }
 
 .title:hover {
     color: var(--primary-color);
+    cursor: pointer;
 }
-
-
 
 .description {
     font-size: var(--text-lg);
     font-weight: var(--font-mid);
     color: var(--tertiary-color);
+    margin-block-end: 1.5rem;
 }
 
 .bottom {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 0.75rem; /* 12px */
+    margin-block-start: auto; /* Pushes the avatar row nicely to the bottom of the card */
 }
 
 .avatar {
-    width: 32px;
-    height: 32px;
+    width: 2rem; /* 32px */
+    height: 2rem; /* 32px */
     border-radius: 50%;
+    overflow: hidden;
 }
 
 .avatar img {
@@ -112,9 +133,15 @@ body {
     font-weight: var(--font-bold);
 }
 
-@media (min-width: 768px) {
-    .container {
-        width: 384px;
-        height: 522px;
-    }
+/* Screen reader utility class for hidden h1 layout architecture */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
